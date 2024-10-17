@@ -1,0 +1,1018 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="RummyGame">
+  <ClassDiagramComponents>
+    <Class name="Game" package="game" visibility="public" isAbstract="true" xPosition="20.0" yPosition="20.0">
+      <Fields>
+        <Field name="MONITORQUEUE" type="boolean" visibility="private" isStatic="true"/>
+        <Field name="player" type="GamePlayer[]" visibility="protected"/>
+        <Field name="gameStarted" type="boolean" visibility="protected"/>
+        <Field name="actionVec" type="Vector&lt;GameAction&gt;" visibility="private"/>
+        <Field name="playerCount" type="int" visibility="protected"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="initializeGame" returnType="void" visibility="protected" isAbstract="true"/>
+        <Method name="gameOver" returnType="boolean" visibility="public" isAbstract="true"/>
+        <Method name="canMove" returnType="boolean" visibility="protected" isAbstract="true">
+          <Argument type="GamePlayer" name="gp"/>
+        </Method>
+        <Method name="canQuit" returnType="boolean" visibility="protected" isAbstract="true">
+          <Argument type="GamePlayer" name="gp"/>
+        </Method>
+        <Method name="getState" returnType="GameState" visibility="public" isFinal="true">
+          <Argument type="GamePlayer" name="p"/>
+          <Argument type="int" name="stateType"/>
+        </Method>
+        <Method name="getGameState" returnType="GameState" visibility="protected" isAbstract="true">
+          <Argument type="GamePlayer" name="p"/>
+          <Argument type="int" name="stateType"/>
+        </Method>
+        <Method name="makeMove" returnType="boolean" visibility="protected" isAbstract="true">
+          <Argument type="GamePlayer" name="thePlayer"/>
+          <Argument type="GameMoveAction" name="move"/>
+        </Method>
+        <Method name="setPlayers" returnType="String" visibility="public">
+          <Argument type="GamePlayer[]" name="players"/>
+        </Method>
+        <Method name="playGame" returnType="void" visibility="public"/>
+        <Method name="requestMoves" returnType="void" visibility="private"/>
+        <Method name="nullPlayersAllowed" returnType="boolean" visibility="public" isAbstract="true"/>
+        <Method name="minPlayersAllowed" returnType="int" visibility="public" isAbstract="true"/>
+        <Method name="maxPlayersAllowed" returnType="int" visibility="public" isAbstract="true"/>
+        <Method name="waitForQuitAck" returnType="void" visibility="private"/>
+        <Method name="indexOf" returnType="int" visibility="protected">
+          <Argument type="GamePlayer" name="p"/>
+        </Method>
+        <Method name="getAction" returnType="GameAction" visibility="private"/>
+        <Method name="quitGame" returnType="void" visibility="private"/>
+        <Method name="applyAction" returnType="void" visibility="public">
+          <Argument type="GameAction" name="action"/>
+        </Method>
+        <Method name="handleTimerEvent" returnType="void" visibility="protected"/>
+        <Method name="whoAmI" returnType="int" visibility="private">
+          <Argument type="GamePlayer" name="gp"/>
+        </Method>
+        <Method name="waitForAllReady" returnType="void" visibility="private"/>
+        <Method name="performAfterAllAreReady" returnType="void" visibility="protected"/>
+        <Method name="wait" returnType="void" visibility="private">
+          <Argument type="int" name="milliSeconds"/>
+        </Method>
+        <Method name="notifyAllStateChanged" returnType="void" visibility="protected" isFinal="true"/>
+        <Method name="performActionOnAll" returnType="void" visibility="protected" isFinal="true">
+          <Argument type="PlayerActionInvoker" name="pai"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ParallelNotifier" package="game" visibility="public" xPosition="320.0" yPosition="20.0">
+      <Fields>
+        <Field name="myPlayer" type="GamePlayer" visibility="private"/>
+        <Field name="actionObject" type="PlayerActionInvoker" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="GamePlayer" name="player"/>
+          <Argument type="PlayerActionInvoker" name="pai"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="run" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="PlayerActionInvoker" package="game" visibility="public" isAbstract="true" xPosition="620.0" yPosition="20.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="invokeAction" returnType="void" visibility="public" isAbstract="true">
+          <Argument type="GamePlayer" name="player"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="StateChangedInvoker" package="game" visibility="public" xPosition="920.0" yPosition="20.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="invokeAction" returnType="void" visibility="public">
+          <Argument type="GamePlayer" name="player"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="TimeToQuitInvoker" package="game" visibility="public" xPosition="1220.0" yPosition="20.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="invokeAction" returnType="void" visibility="public">
+          <Argument type="GamePlayer" name="player"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="GameIsOverInvoker" package="game" visibility="public" xPosition="1520.0" yPosition="20.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="invokeAction" returnType="void" visibility="public">
+          <Argument type="GamePlayer" name="player"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="GameAction" package="game" visibility="public" isAbstract="true" xPosition="1820.0" yPosition="20.0">
+      <Fields>
+        <Field name="source" type="GamePlayer" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="GamePlayer" name="source"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getSource" returnType="GamePlayer" visibility="public"/>
+        <Method name="isMove" returnType="boolean" visibility="public"/>
+        <Method name="isTimer" returnType="boolean" visibility="public"/>
+        <Method name="isQuitRequest" returnType="boolean" visibility="public"/>
+        <Method name="isQuitAcknowledge" returnType="boolean" visibility="public"/>
+        <Method name="isNullAction" returnType="boolean" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="GameComputerPlayer" package="game" visibility="public" isAbstract="true" xPosition="2120.0" yPosition="20.0">
+      <Fields>
+        <Field name="game" type="Game" visibility="protected"/>
+        <Field name="playerId" type="int" visibility="private"/>
+        <Field name="moveHasBeenRequested" type="boolean" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getId" returnType="int" visibility="public"/>
+        <Method name="setGame" returnType="void" visibility="public">
+          <Argument type="Game" name="gm"/>
+          <Argument type="int" name="playerId"/>
+        </Method>
+        <Method name="requestMove" returnType="void" visibility="public"/>
+        <Method name="run" returnType="void" visibility="public"/>
+        <Method name="doRequestMove" returnType="void" visibility="protected" isAbstract="true"/>
+        <Method name="notYourMove" returnType="void" visibility="public"/>
+        <Method name="timeToQuit" returnType="void" visibility="public"/>
+        <Method name="invalidRequest" returnType="void" visibility="public"/>
+        <Method name="illegalMove" returnType="void" visibility="public"/>
+        <Method name="gameIsOver" returnType="void" visibility="public"/>
+        <Method name="stateChanged" returnType="void" visibility="public"/>
+        <Method name="finishUp" returnType="void" visibility="public"/>
+        <Method name="sleep" returnType="void" visibility="protected">
+          <Argument type="int" name="millis"/>
+        </Method>
+        <Method name="isReady" returnType="boolean" visibility="public"/>
+      </Methods>
+    </Class>
+    <Interface name="GameDriver" package="game" visibility="public" xPosition="20.0" yPosition="420.0">
+      <Methods>
+        <Method name="localPlayerChoices" returnType="String[]" visibility="public" isAbstract="true"/>
+        <Method name="createLocalPlayer" returnType="GamePlayer" visibility="public" isAbstract="true">
+          <Argument type="String" name="name"/>
+        </Method>
+        <Method name="createRemotePlayer" returnType="ProxyPlayer" visibility="public" isAbstract="true"/>
+        <Method name="createRemoteGame" returnType="Game" visibility="public" isAbstract="true">
+          <Argument type="String" name="hostName"/>
+        </Method>
+        <Method name="createLocalGame" returnType="Game" visibility="public" isAbstract="true">
+          <Argument type="int" name="numPlayers"/>
+        </Method>
+      </Methods>
+    </Interface>
+    <Class name="GameGui" package="game" visibility="public" isAbstract="true" xPosition="320.0" yPosition="420.0">
+      <Fields>
+        <Field name="game" type="Game" visibility="protected"/>
+        <Field name="localEventCount" type="int" visibility="private" isStatic="true"/>
+        <Field name="DEFAULT_HEIGHT" type="int" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="DEFAULT_WIDTH" type="int" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="dummyButton" type="DummyButton" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="initialHeight" returnType="int" visibility="protected"/>
+        <Method name="initialWidth" returnType="int" visibility="protected"/>
+        <Method name="createApplicationComponent" returnType="Component" visibility="protected"/>
+        <Method name="addButton" returnType="JButton" visibility="protected">
+          <Argument type="String" name="text"/>
+          <Argument type="Container" name="where"/>
+          <Argument type="ActionListener" name="listener"/>
+        </Method>
+        <Method name="setGame" returnType="void" visibility="public">
+          <Argument type="Game" name="game"/>
+        </Method>
+        <Method name="setGameMore" returnType="void" visibility="protected"/>
+        <Method name="updateTitle" returnType="void" visibility="protected"/>
+        <Method name="stateChanged" returnType="void" visibility="public">
+          <Argument type="GameState" name="state"/>
+        </Method>
+        <Method name="defaultTitle" returnType="String" visibility="protected" isAbstract="true"/>
+        <Method name="infoMessage" returnType="void" visibility="protected" isStatic="true">
+          <Argument type="String" name="message"/>
+        </Method>
+        <Method name="errorMessage" returnType="void" visibility="protected" isStatic="true">
+          <Argument type="String" name="message"/>
+        </Method>
+        <Method name="submitAction" returnType="void" visibility="protected" isFinal="true">
+          <Argument type="String" name="actionType"/>
+        </Method>
+        <Method name="requestMove" returnType="void" visibility="public"/>
+        <Method name="notYourMove" returnType="void" visibility="public"/>
+        <Method name="illegalMove" returnType="void" visibility="public"/>
+        <Method name="timeToQuit" returnType="void" visibility="public"/>
+        <Method name="invalidRequest" returnType="void" visibility="public"/>
+        <Method name="gameIsOver" returnType="void" visibility="public"/>
+        <Method name="stateChanged" returnType="void" visibility="public"/>
+        <Method name="mouseClicked" returnType="void" visibility="public">
+          <Argument type="MouseEvent" name="e"/>
+        </Method>
+        <Method name="mousePressed" returnType="void" visibility="public">
+          <Argument type="MouseEvent" name="e"/>
+        </Method>
+        <Method name="mouseReleased" returnType="void" visibility="public">
+          <Argument type="MouseEvent" name="e"/>
+        </Method>
+        <Method name="mouseEntered" returnType="void" visibility="public">
+          <Argument type="MouseEvent" name="e"/>
+        </Method>
+        <Method name="mouseExited" returnType="void" visibility="public">
+          <Argument type="MouseEvent" name="e"/>
+        </Method>
+        <Method name="keyTyped" returnType="void" visibility="public">
+          <Argument type="KeyEvent" name="e"/>
+        </Method>
+        <Method name="keyPressed" returnType="void" visibility="public">
+          <Argument type="KeyEvent" name="e"/>
+        </Method>
+        <Method name="keyReleased" returnType="void" visibility="public">
+          <Argument type="KeyEvent" name="e"/>
+        </Method>
+        <Method name="windowClosing" returnType="void" visibility="public">
+          <Argument type="WindowEvent" name="e"/>
+        </Method>
+        <Method name="windowOpened" returnType="void" visibility="public">
+          <Argument type="WindowEvent" name="e"/>
+        </Method>
+        <Method name="windowClosed" returnType="void" visibility="public">
+          <Argument type="WindowEvent" name="e"/>
+        </Method>
+        <Method name="windowIconified" returnType="void" visibility="public">
+          <Argument type="WindowEvent" name="e"/>
+        </Method>
+        <Method name="windowDeiconified" returnType="void" visibility="public">
+          <Argument type="WindowEvent" name="e"/>
+        </Method>
+        <Method name="windowActivated" returnType="void" visibility="public">
+          <Argument type="WindowEvent" name="e"/>
+        </Method>
+        <Method name="windowDeactivated" returnType="void" visibility="public">
+          <Argument type="WindowEvent" name="e"/>
+        </Method>
+        <Method name="finishUp" returnType="void" visibility="public"/>
+        <Method name="getBackground" returnType="Color" visibility="public">
+          <Argument type="Color" name="BLUE"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="DummyButton" package="game" visibility="public" xPosition="620.0" yPosition="420.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="name"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="submitActionEvent" returnType="void" visibility="public">
+          <Argument type="ActionEvent" name="ae"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="GameHumanPlayer" package="game" visibility="public" isAbstract="true" xPosition="920.0" yPosition="420.0">
+      <Fields>
+        <Field name="game" type="Game" visibility="protected"/>
+        <Field name="playerId" type="int" visibility="protected"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="setGame" returnType="void" visibility="public">
+          <Argument type="Game" name="game"/>
+          <Argument type="int" name="playerId"/>
+        </Method>
+        <Method name="setGameMore" returnType="void" visibility="protected"/>
+        <Method name="requestMove" returnType="void" visibility="public"/>
+        <Method name="notYourMove" returnType="void" visibility="public"/>
+        <Method name="timeToQuit" returnType="void" visibility="public"/>
+        <Method name="invalidRequest" returnType="void" visibility="public"/>
+        <Method name="illegalMove" returnType="void" visibility="public"/>
+        <Method name="gameIsOver" returnType="void" visibility="public"/>
+        <Method name="stateChanged" returnType="void" visibility="public"/>
+        <Method name="finishUp" returnType="void" visibility="public"/>
+        <Method name="getId" returnType="int" visibility="public"/>
+        <Method name="isReady" returnType="boolean" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="GameMoveAction" package="game" visibility="public" isAbstract="true" xPosition="1220.0" yPosition="420.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="GamePlayer" name="source"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="isMove" returnType="boolean" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="GameNullAction" package="game" visibility="public" xPosition="1520.0" yPosition="420.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="GamePlayer" name="p"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="isNullAction" returnType="boolean" visibility="public"/>
+      </Methods>
+    </Class>
+    <Interface name="GamePlayer" package="game" visibility="public" xPosition="1820.0" yPosition="420.0">
+      <Methods>
+        <Method name="setGame" returnType="void" visibility="public" isAbstract="true">
+          <Argument type="Game" name="game"/>
+          <Argument type="int" name="playerId"/>
+        </Method>
+        <Method name="requestMove" returnType="void" visibility="public" isAbstract="true"/>
+        <Method name="notYourMove" returnType="void" visibility="public" isAbstract="true"/>
+        <Method name="timeToQuit" returnType="void" visibility="public" isAbstract="true"/>
+        <Method name="invalidRequest" returnType="void" visibility="public" isAbstract="true"/>
+        <Method name="illegalMove" returnType="void" visibility="public" isAbstract="true"/>
+        <Method name="gameIsOver" returnType="void" visibility="public" isAbstract="true"/>
+        <Method name="stateChanged" returnType="void" visibility="public" isAbstract="true"/>
+        <Method name="finishUp" returnType="void" visibility="public" isAbstract="true"/>
+        <Method name="getId" returnType="int" visibility="public" isAbstract="true"/>
+        <Method name="isReady" returnType="boolean" visibility="public" isAbstract="true"/>
+      </Methods>
+    </Interface>
+    <Class name="GameQuitAction" package="game" visibility="public" xPosition="2120.0" yPosition="420.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="GamePlayer" name="p"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="isQuitRequest" returnType="boolean" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="GameState" package="game" visibility="public" isAbstract="true" xPosition="20.0" yPosition="820.0">
+      <Fields/>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="GameTimer" package="game" visibility="public" xPosition="320.0" yPosition="820.0">
+      <Fields>
+        <Field name="game" type="Game" visibility="private"/>
+        <Field name="ticks" type="int" visibility="private"/>
+        <Field name="interval" type="int" visibility="private"/>
+        <Field name="thread" type="Thread" visibility="private"/>
+        <Field name="self" type="GameTimer" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Game" name="g"/>
+          <Argument type="int" name="interval"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="start" returnType="void" visibility="public"/>
+        <Method name="stop" returnType="void" visibility="public"/>
+        <Method name="getTicks" returnType="int" visibility="public"/>
+        <Method name="reset" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="GameTimerAction" package="game" visibility="public" xPosition="620.0" yPosition="820.0">
+      <Fields>
+        <Field name="timer" type="GameTimer" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="GameTimer" name="t"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="isTimer" returnType="boolean" visibility="public"/>
+        <Method name="getTimer" returnType="GameTimer" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="DummyTimerPlayer" package="game" visibility="public" xPosition="920.0" yPosition="820.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="setGame" returnType="void" visibility="public">
+          <Argument type="Game" name="game"/>
+          <Argument type="int" name="playerId"/>
+        </Method>
+        <Method name="requestMove" returnType="void" visibility="public"/>
+        <Method name="notYourMove" returnType="void" visibility="public"/>
+        <Method name="timeToQuit" returnType="void" visibility="public"/>
+        <Method name="invalidRequest" returnType="void" visibility="public"/>
+        <Method name="illegalMove" returnType="void" visibility="public"/>
+        <Method name="gameIsOver" returnType="void" visibility="public"/>
+        <Method name="stateChanged" returnType="void" visibility="public"/>
+        <Method name="finishUp" returnType="void" visibility="public"/>
+        <Method name="getId" returnType="int" visibility="public"/>
+        <Method name="isReady" returnType="boolean" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="IntGameState" package="game" visibility="public" xPosition="1220.0" yPosition="820.0">
+      <Fields>
+        <Field name="num" type="int" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="n"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getNum" returnType="int" visibility="public"/>
+        <Method name="toString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="ProxyObject" package="game" visibility="public" isAbstract="true" xPosition="1520.0" yPosition="820.0">
+      <Fields>
+        <Field name="in" type="BufferedReader" visibility="private"/>
+        <Field name="out" type="PrintWriter" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="finishInit" returnType="void" visibility="protected"/>
+        <Method name="isComplete" returnType="boolean" visibility="public"/>
+        <Method name="readInputLine" returnType="String" visibility="protected"/>
+        <Method name="writeOutputLine" returnType="void" visibility="protected">
+          <Argument type="String" name="str"/>
+        </Method>
+        <Method name="getAdmPortNum" returnType="int" visibility="protected" isAbstract="true"/>
+        <Method name="connectAsServer" returnType="void" visibility="protected"/>
+        <Method name="connectAsClient" returnType="void" visibility="protected">
+          <Argument type="String" name="hostName"/>
+        </Method>
+        <Method name="parseCommand" returnType="String" visibility="protected" isStatic="true">
+          <Argument type="String" name="str"/>
+        </Method>
+        <Method name="parseArgs" returnType="int[]" visibility="protected" isStatic="true">
+          <Argument type="String" name="str"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ProxyPlayer" package="game" visibility="public" isAbstract="true" xPosition="1820.0" yPosition="820.0">
+      <Fields>
+        <Field name="game" type="Game" visibility="private"/>
+        <Field name="quittingTime" type="boolean" visibility="private"/>
+        <Field name="requestMoveThread" type="Thread" visibility="private"/>
+        <Field name="playerId" type="int" visibility="private"/>
+        <Field name="isReady" type="boolean" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="encodeState" returnType="String" visibility="protected" isAbstract="true">
+          <Argument type="GameState" name="gs"/>
+        </Method>
+        <Method name="decodeAction" returnType="GameAction" visibility="protected" isAbstract="true">
+          <Argument type="String" name="s"/>
+        </Method>
+        <Method name="run" returnType="void" visibility="public"/>
+        <Method name="setGame" returnType="void" visibility="public">
+          <Argument type="Game" name="game"/>
+          <Argument type="int" name="playerId"/>
+        </Method>
+        <Method name="requestMove" returnType="void" visibility="public"/>
+        <Method name="notYourMove" returnType="void" visibility="public"/>
+        <Method name="timeToQuit" returnType="void" visibility="public"/>
+        <Method name="invalidRequest" returnType="void" visibility="public"/>
+        <Method name="illegalMove" returnType="void" visibility="public"/>
+        <Method name="gameIsOver" returnType="void" visibility="public"/>
+        <Method name="stateChanged" returnType="void" visibility="public"/>
+        <Method name="finishUp" returnType="void" visibility="public"/>
+        <Method name="sendGenericMessage" returnType="void" visibility="private">
+          <Argument type="String" name="msg"/>
+        </Method>
+        <Method name="sendMessage" returnType="void" visibility="protected" isFinal="true">
+          <Argument type="String" name="msg"/>
+        </Method>
+        <Method name="getId" returnType="int" visibility="public"/>
+        <Method name="getGame" returnType="Game" visibility="public"/>
+        <Method name="finishInit" returnType="void" visibility="protected"/>
+        <Method name="isReady" returnType="boolean" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Card" package="rummy" visibility="public" xPosition="2120.0" yPosition="820.0">
+      <Fields>
+        <Field name="ID" type="int" visibility="private"/>
+        <Field name="RANK" type="Rank" visibility="private"/>
+        <Field name="SUIT" type="Suit" visibility="private"/>
+        <Field name="IMAGE" type="String" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="id"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="Suit" name="suit"/>
+          <Argument type="Rank" name="rank"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getName" returnType="String" visibility="public"/>
+        <Method name="getRank" returnType="int" visibility="public"/>
+        <Method name="getID" returnType="int" visibility="public"/>
+        <Method name="getSuit" returnType="Suit" visibility="public"/>
+        <Method name="getImage" returnType="String" visibility="public"/>
+        <Method name="compare" returnType="int" visibility="public">
+          <Argument type="Card" name="c1"/>
+          <Argument type="Card" name="c2"/>
+        </Method>
+        <Method name="equals" returnType="boolean" visibility="public">
+          <Argument type="Object" name="otherCard"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Move" package="rummy" visibility="public" isFinal="true" xPosition="20.0" yPosition="1220.0">
+      <Fields>
+        <Field name="playerAsked" type="int" visibility="private"/>
+        <Field name="playerTurn" type="int" visibility="private"/>
+        <Field name="cardsReceived" type="int" visibility="private"/>
+        <Field name="cardAsked" type="int" visibility="private"/>
+        <Field name="cardName" type="String" visibility="private"/>
+        <Field name="completedSet" type="boolean" visibility="private"/>
+        <Field name="receivedCardFromDeck" type="boolean" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="PlayerAsked"/>
+          <Argument type="int" name="PlayerTurn"/>
+          <Argument type="int" name="CardsReceived"/>
+          <Argument type="int" name="CardAsked"/>
+          <Argument type="boolean" name="CompletedSet"/>
+          <Argument type="boolean" name="ReceivedCardFromDeck"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="setPlayerAsked" returnType="void" visibility="public">
+          <Argument type="int" name="playerAsked"/>
+        </Method>
+        <Method name="getPlayerAsked" returnType="int" visibility="public"/>
+        <Method name="setPlayerTurn" returnType="void" visibility="public">
+          <Argument type="int" name="playerTurn"/>
+        </Method>
+        <Method name="getPlayerTurn" returnType="int" visibility="public"/>
+        <Method name="setCardsReceived" returnType="void" visibility="public">
+          <Argument type="int" name="cardsReceived"/>
+        </Method>
+        <Method name="getCardsReceived" returnType="int" visibility="public"/>
+        <Method name="setCardAsked" returnType="void" visibility="public">
+          <Argument type="int" name="cardAsked"/>
+        </Method>
+        <Method name="getCardAsked" returnType="int" visibility="public"/>
+        <Method name="setCompletedSet" returnType="void" visibility="public">
+          <Argument type="boolean" name="completedSet"/>
+        </Method>
+        <Method name="isCompletedSet" returnType="boolean" visibility="public"/>
+        <Method name="setReceivedCardFromDeck" returnType="void" visibility="public">
+          <Argument type="boolean" name="receivedCardFromDeck"/>
+        </Method>
+        <Method name="isReceivedCardFromDeck" returnType="boolean" visibility="public"/>
+        <Method name="getCardAskedName" returnType="String" visibility="public"/>
+        <Method name="setCardAskedName" returnType="void" visibility="public">
+          <Argument type="String" name="cardName"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="RummyComputerPlayer" package="rummy" visibility="public" isFinal="true" xPosition="320.0" yPosition="1220.0">
+      <Fields>
+        <Field name="hand" type="Vector&lt;Card&gt;" visibility="private"/>
+        <Field name="faces" type="Vector&lt;JButton&gt;" visibility="private"/>
+        <Field name="difficulty" type="int" visibility="private"/>
+        <Field name="playerId" type="int" visibility="private"/>
+        <Field name="ready" type="boolean" visibility="private"/>
+        <Field name="state" type="RummyState" visibility="private"/>
+        <Field name="game" type="Game" visibility="private"/>
+        <Field name="rg" type="Random" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="difficulty"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="setGame" returnType="void" visibility="public">
+          <Argument type="Game" name="game"/>
+          <Argument type="int" name="playerId"/>
+        </Method>
+        <Method name="doRequestMove" returnType="void" visibility="public"/>
+        <Method name="doDraw" returnType="void" visibility="private"/>
+        <Method name="doMelds" returnType="void" visibility="private"/>
+        <Method name="doLayouts" returnType="void" visibility="private"/>
+        <Method name="doDiscard" returnType="void" visibility="private"/>
+        <Method name="notYourMove" returnType="void" visibility="public"/>
+        <Method name="timeToQuit" returnType="void" visibility="public"/>
+        <Method name="invalidRequest" returnType="void" visibility="public"/>
+        <Method name="illegalMove" returnType="void" visibility="public"/>
+        <Method name="gameIsOver" returnType="void" visibility="public"/>
+        <Method name="stateChanged" returnType="void" visibility="public"/>
+        <Method name="finishUp" returnType="void" visibility="public"/>
+        <Method name="getId" returnType="int" visibility="public"/>
+        <Method name="isReady" returnType="boolean" visibility="public"/>
+        <Method name="setHand" returnType="void" visibility="public">
+          <Argument type="Vector&lt;Card&gt;" name="newHand"/>
+        </Method>
+        <Method name="getHand" returnType="Vector&lt;Card&gt;" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="RummyDriver" package="rummy" visibility="public" isFinal="true" xPosition="620.0" yPosition="1220.0">
+      <Fields>
+        <Field name="lpChoices" type="String[]" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="localPlayerChoices" returnType="String[]" visibility="public"/>
+        <Method name="createLocalPlayer" returnType="RummyPlayer" visibility="public">
+          <Argument type="String" name="name"/>
+        </Method>
+        <Method name="createLocalGame" returnType="RummyGame" visibility="public">
+          <Argument type="int" name="numPlayers"/>
+        </Method>
+        <Method name="createRemotePlayer" returnType="ProxyPlayer" visibility="public"/>
+        <Method name="createRemoteGame" returnType="Game" visibility="public">
+          <Argument type="String" name="hostName"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String[]" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="RummyDriverEngine" package="rummy" visibility="public" isFinal="true" xPosition="920.0" yPosition="1220.0">
+      <Fields>
+        <Field name="driver" type="RummyDriver" visibility="private"/>
+        <Field name="selections" type="String[]" visibility="private"/>
+        <Field name="networkCancelStrArray" type="String[]" visibility="private" isStatic="true"/>
+        <Field name="networkNoMoreCancelStrArray" type="String[]" visibility="private" isStatic="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="StartGame" returnType="void" visibility="public"/>
+        <Method name="getSelection" returnType="int" visibility="private">
+          <Argument type="String" name="title"/>
+          <Argument type="String" name="prompt"/>
+          <Argument type="String[]" name="options"/>
+        </Method>
+        <Method name="createLocalPlayers" returnType="RummyPlayer[]" visibility="private">
+          <Argument type="RummyGame" name="dummyGame"/>
+        </Method>
+        <Method name="playerChoiceMenu" returnType="String[]" visibility="private">
+          <Argument type="String[]" name="extras"/>
+        </Method>
+        <Method name="errorMessage" returnType="void" visibility="private">
+          <Argument type="String" name="message"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="RummyGui" package="rummy" visibility="public" isFinal="true" xPosition="1220.0" yPosition="1220.0">
+      <Fields>
+        <Field name="serialVersionUID" type="long" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="WINDOW_SIZE" type="int" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="top" type="JPanel" visibility="package"/>
+        <Field name="state" type="RummyState" visibility="package"/>
+        <Field name="SOUTH" type="int" visibility="private" isFinal="true"/>
+        <Field name="EAST" type="int" visibility="private" isFinal="true"/>
+        <Field name="NORTH" type="int" visibility="private" isFinal="true"/>
+        <Field name="WEST" type="int" visibility="private" isFinal="true"/>
+        <Field name="positionBoxes" type="Box[]" visibility="package"/>
+        <Field name="centerBox" type="Box" visibility="package"/>
+        <Field name="meldButtonsBox" type="Box" visibility="package"/>
+        <Field name="cardBox" type="Box" visibility="package"/>
+        <Field name="meldFlowPanel" type="JPanel" visibility="package"/>
+        <Field name="VERTICAL_GAP" type="int" visibility="private" isFinal="true"/>
+        <Field name="HORIZONTAL_GAP" type="int" visibility="private" isFinal="true"/>
+        <Field name="stockTop" type="JButton" visibility="package"/>
+        <Field name="discardPileTop" type="JButton" visibility="package"/>
+        <Field name="playerNames" type="JButton[]" visibility="package"/>
+        <Field name="playerHands" type="JButton[]" visibility="package"/>
+        <Field name="playerBoxHands" type="Box[]" visibility="package"/>
+        <Field name="hands" type="Vector&lt;Vector&lt;Card&gt;&gt;" visibility="package"/>
+        <Field name="playerPosition" type="int[]" visibility="package"/>
+        <Field name="players" type="RummyPlayer[]" visibility="package"/>
+        <Field name="draw" type="boolean" visibility="private"/>
+        <Field name="move" type="boolean" visibility="private"/>
+        <Field name="meldActivated" type="boolean" visibility="private"/>
+        <Field name="layoutActivated" type="boolean" visibility="private"/>
+        <Field name="numPlayers" type="int" visibility="private"/>
+        <Field name="rummyGui" type="RummyGui" visibility="private" isStatic="true"/>
+        <Field name="abstractDrawAction" type="AbstractDrawAction" visibility="package"/>
+        <Field name="abstractMoveActions" type="AbstractMoveActions" visibility="package"/>
+        <Field name="logsBox" type="Box" visibility="package"/>
+        <Field name="chatField" type="JTextField" visibility="package"/>
+        <Field name="moveLog" type="JTextArea" visibility="package"/>
+        <Field name="sendMessageBtn" type="JButton" visibility="package"/>
+        <Field name="gameMessageText" type="JTextField" visibility="package"/>
+        <Field name="meldActivatedBtn" type="JButton" visibility="package"/>
+        <Field name="doMeldBtn" type="JButton" visibility="package"/>
+        <Field name="theMeld" type="Vector&lt;Card&gt;" visibility="package"/>
+        <Field name="meldSelectedButton" type="JButton" visibility="package"/>
+        <Field name="title" type="String" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="private"/>
+      </Constructors>
+      <Methods>
+        <Method name="createRummyGui" returnType="GameGui" visibility="public" isStatic="true"/>
+        <Method name="defaultTitle" returnType="String" visibility="protected"/>
+        <Method name="setGameMore" returnType="void" visibility="protected"/>
+        <Method name="resetTop" returnType="void" visibility="private"/>
+        <Method name="createApplicationComponent" returnType="Component" visibility="protected"/>
+        <Method name="stateChanged" returnType="void" visibility="public">
+          <Argument type="GameState" name="newState"/>
+        </Method>
+        <Method name="getCurrentPlayer" returnType="RummyPlayer" visibility="private"/>
+        <Method name="keyPressed" returnType="void" visibility="public">
+          <Argument type="KeyEvent" name="e"/>
+        </Method>
+        <Method name="actionPerformed" returnType="void" visibility="public">
+          <Argument type="ActionEvent" name="e"/>
+        </Method>
+        <Method name="convertTextToVector" returnType="Vector&lt;Card&gt;" visibility="public">
+          <Argument type="String" name="text"/>
+        </Method>
+        <Method name="convertVectorToText" returnType="String" visibility="public">
+          <Argument type="Vector&lt;Card&gt;" name="cardsAsVector"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="RummyHumanPlayer" package="rummy" visibility="public" isFinal="true" xPosition="1520.0" yPosition="1220.0">
+      <Fields>
+        <Field name="hand" type="Vector&lt;Card&gt;" visibility="private"/>
+        <Field name="faces" type="Vector&lt;JButton&gt;" visibility="private"/>
+        <Field name="game" type="Game" visibility="private"/>
+        <Field name="playerId" type="int" visibility="private"/>
+        <Field name="ready" type="boolean" visibility="private"/>
+        <Field name="state" type="RummyState" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="setGame" returnType="void" visibility="public">
+          <Argument type="Game" name="game"/>
+          <Argument type="int" name="playerId"/>
+        </Method>
+        <Method name="requestMove" returnType="void" visibility="public"/>
+        <Method name="notYourMove" returnType="void" visibility="public"/>
+        <Method name="timeToQuit" returnType="void" visibility="public"/>
+        <Method name="invalidRequest" returnType="void" visibility="public"/>
+        <Method name="illegalMove" returnType="void" visibility="public"/>
+        <Method name="gameIsOver" returnType="void" visibility="public"/>
+        <Method name="stateChanged" returnType="void" visibility="public"/>
+        <Method name="finishUp" returnType="void" visibility="public"/>
+        <Method name="getId" returnType="int" visibility="public"/>
+        <Method name="isReady" returnType="boolean" visibility="public"/>
+        <Method name="setHand" returnType="void" visibility="public">
+          <Argument type="Vector&lt;Card&gt;" name="newHand"/>
+        </Method>
+        <Method name="getHand" returnType="Vector&lt;Card&gt;" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="RummyMoveAction" package="rummy" visibility="public" isAbstract="true" xPosition="1820.0" yPosition="1220.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="GamePlayer" name="source"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="isMove" returnType="boolean" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="RummyMoveDiscard" package="rummy" visibility="public" xPosition="2120.0" yPosition="1220.0">
+      <Fields>
+        <Field name="index" type="int" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="GamePlayer" name="source"/>
+          <Argument type="int" name="index"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getDiscardIndex" returnType="int" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="RummyMoveDraw" package="rummy" visibility="public" xPosition="20.0" yPosition="1620.0">
+      <Fields>
+        <Field name="moveDeckType" type="DeckType" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="GamePlayer" name="source"/>
+          <Argument type="DeckType" name="d"/>
+        </Constructor>
+      </Constructors>
+      <Methods/>
+    </Class>
+    <Class name="RummyMoveLayoff" package="rummy" visibility="public" xPosition="320.0" yPosition="1620.0">
+      <Fields>
+        <Field name="meldButton" type="JButton" visibility="private"/>
+        <Field name="cardIndex" type="int" visibility="private"/>
+        <Field name="meldIndex" type="int" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="GamePlayer" name="source"/>
+          <Argument type="JButton" name="meldButton"/>
+          <Argument type="int" name="meldIndex"/>
+          <Argument type="int" name="cardIndex"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getMeldButton" returnType="JButton" visibility="public"/>
+        <Method name="getCardIndex" returnType="int" visibility="public"/>
+        <Method name="getMeldIndex" returnType="int" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="RummyMoveMeld" package="rummy" visibility="public" xPosition="620.0" yPosition="1620.0">
+      <Fields>
+        <Field name="meld" type="Vector&lt;Card&gt;" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="GamePlayer" name="source"/>
+          <Argument type="Vector&lt;Card&gt;" name="meld"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getMeld" returnType="Vector&lt;Card&gt;" visibility="public"/>
+      </Methods>
+    </Class>
+    <Interface name="RummyPlayer" package="rummy" visibility="public" xPosition="920.0" yPosition="1620.0">
+      <Methods>
+        <Method name="setHand" returnType="void" visibility="public">
+          <Argument type="Vector&lt;Card&gt;" name="newHand"/>
+        </Method>
+        <Method name="getHand" returnType="Vector&lt;Card&gt;" visibility="public"/>
+      </Methods>
+    </Interface>
+    <Class name="RummyState" package="rummy" visibility="public" isFinal="true" xPosition="1220.0" yPosition="1620.0">
+      <Fields>
+        <Field name="numPlayers" type="int" visibility="private"/>
+        <Field name="currentPlayer" type="int" visibility="private"/>
+        <Field name="stock" type="Vector&lt;Card&gt;" visibility="private"/>
+        <Field name="discard" type="Vector&lt;Card&gt;" visibility="private"/>
+        <Field name="melds" type="Vector&lt;Vector&lt;Card&gt;&gt;" visibility="private"/>
+        <Field name="hands" type="Vector&lt;Vector&lt;Card&gt;&gt;" visibility="private"/>
+        <Field name="chatHistory" type="Vector&lt;String&gt;" visibility="private"/>
+        <Field name="moveLog" type="Vector&lt;Move&gt;" visibility="private"/>
+        <Field name="score" type="int[]" visibility="private"/>
+        <Field name="hasWon" type="boolean" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Stack&lt;Card&gt;" name="stock"/>
+          <Argument type="Stack&lt;Card&gt;" name="discard"/>
+          <Argument type="Vector&lt;Vector&lt;Card&gt;&gt;" name="hands"/>
+          <Argument type="Vector&lt;Vector&lt;Card&gt;&gt;" name="melds"/>
+          <Argument type="Vector&lt;String&gt;" name="newChatHistory"/>
+          <Argument type="int" name="currentPlayer"/>
+          <Argument type="Vector&lt;Move&gt;" name="moves"/>
+          <Argument type="int[]" name="score"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getStock" returnType="Vector&lt;Card&gt;" visibility="public"/>
+        <Method name="getDiscardPile" returnType="Vector&lt;Card&gt;" visibility="public"/>
+        <Method name="getMeld" returnType="Vector&lt;Card&gt;" visibility="public">
+          <Argument type="int" name="index"/>
+        </Method>
+        <Method name="getWinner" returnType="int" visibility="public"/>
+        <Method name="setHasWon" returnType="void" visibility="public">
+          <Argument type="boolean" name="hasWon"/>
+        </Method>
+        <Method name="isHasWon" returnType="boolean" visibility="public"/>
+        <Method name="getCurrentPlayer" returnType="int" visibility="public"/>
+        <Method name="getChat" returnType="Vector&lt;String&gt;" visibility="public"/>
+        <Method name="getMove" returnType="Vector&lt;Move&gt;" visibility="public"/>
+        <Method name="getHand" returnType="Vector&lt;Card&gt;" visibility="public">
+          <Argument type="int" name="ID"/>
+        </Method>
+        <Method name="getScore" returnType="int" visibility="public">
+          <Argument type="int" name="ID"/>
+        </Method>
+        <Method name="getScores" returnType="int[]" visibility="public"/>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <IsRelation name="is" source="game.StateChangedInvoker" target="game.PlayerActionInvoker"/>
+    <HasRelation name="actionVec" source="game.Game" target="game.GameAction" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="rummy.RummyState" target="game.GameState"/>
+    <HasRelation name="state" source="rummy.RummyGui" target="rummy.RummyState" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="meld" source="rummy.RummyMoveMeld" target="rummy.Card" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="timer" source="game.GameTimerAction" target="game.GameTimer" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="rummy.RummyMoveDiscard" target="rummy.RummyMoveAction"/>
+    <UseRelation source="game.GameHumanPlayer" target="game.Game" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="rummy.RummyGui" target="rummy.RummyPlayer" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="game.StateChangedInvoker" target="game.GamePlayer" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="game.ProxyPlayer" target="game.ProxyObject"/>
+    <UseRelation source="game.Game" target="game.GameAction" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="rummy.RummyMoveLayoff" target="rummy.RummyMoveAction"/>
+    <UseRelation source="game.Game" target="game.GamePlayer" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="theMeld" source="rummy.RummyGui" target="rummy.Card" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="game.GameDriver" target="game.Game" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="game" source="game.GameComputerPlayer" target="game.Game" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="game.ProxyPlayer" target="game.GameAction" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="state" source="rummy.RummyHumanPlayer" target="rummy.RummyState" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="rummy.RummyPlayer" target="rummy.Card" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="game.Game" target="rummy.Move" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="game.GameComputerPlayer" target="game.GamePlayer"/>
+    <UseRelation source="rummy.RummyState" target="rummy.Move" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="driver" source="rummy.RummyDriverEngine" target="rummy.RummyDriver" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="game" source="game.GameTimer" target="game.Game" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="rummy.RummyGui" target="game.GameState" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="stock" source="rummy.RummyState" target="rummy.Card" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="rummy.RummyComputerPlayer" target="game.GameComputerPlayer"/>
+    <HasRelation name="state" source="rummy.RummyComputerPlayer" target="rummy.RummyState" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="game.TimeToQuitInvoker" target="game.GamePlayer" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="myPlayer" source="game.ParallelNotifier" target="game.GamePlayer" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="game.GameMoveAction" target="game.GameAction"/>
+    <IsRelation name="is" source="game.GameNullAction" target="game.GameAction"/>
+    <UseRelation source="rummy.Card" target="rummy.Card" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="rummy.RummyHumanPlayer" target="rummy.Card" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="game.GameDriver" target="game.GamePlayer" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="game.ProxyPlayer" target="game.Game" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="rummy.RummyDriverEngine" target="rummy.RummyPlayer" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="game.Game" target="game.GameState" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="rummyGui" source="rummy.RummyGui" target="rummy.RummyGui" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="game.GamePlayer" target="game.Game" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="game.GameComputerPlayer" target="game.Game" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="rummy.RummyComputerPlayer" target="rummy.Card" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="rummy.RummyHumanPlayer" target="rummy.RummyPlayer"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="game.GameHumanPlayer" target="game.GamePlayer"/>
+    <UseRelation source="rummy.RummyDriver" target="game.ProxyPlayer" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="game" source="rummy.RummyHumanPlayer" target="game.Game" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="game" source="game.GameHumanPlayer" target="game.Game" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="game.IntGameState" target="game.GameState"/>
+    <HasRelation name="hands" source="rummy.RummyGui" target="rummy.Card" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="game.GameDriver" target="game.ProxyPlayer" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="game.GameIsOverInvoker" target="game.PlayerActionInvoker"/>
+    <HasRelation name="source" source="game.GameAction" target="game.GamePlayer" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="game.GameGui" target="game.GameState" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="melds" source="rummy.RummyState" target="rummy.Card" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="dummyButton" source="game.GameGui" target="game.DummyButton" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="rummy.RummyDriver" target="game.Game" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="rummy.RummyDriver" target="rummy.RummyPlayer" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="game.PlayerActionInvoker" target="game.GamePlayer" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="game.GameTimerAction" target="game.GameTimer" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="game" source="rummy.RummyComputerPlayer" target="game.Game" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="game.TimeToQuitInvoker" target="game.PlayerActionInvoker"/>
+    <HasRelation name="game" source="game.GameGui" target="game.Game" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="game" source="game.ProxyPlayer" target="game.Game" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="game.GameTimerAction" target="game.GameAction"/>
+    <UseRelation source="rummy.RummyComputerPlayer" target="game.Game" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="self" source="game.GameTimer" target="game.GameTimer" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="rummy.RummyGui" target="rummy.Card" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="rummy.RummyHumanPlayer" target="game.GameHumanPlayer"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="rummy.RummyComputerPlayer" target="rummy.RummyPlayer"/>
+    <UseRelation source="rummy.RummyMoveMeld" target="rummy.Card" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="actionObject" source="game.ParallelNotifier" target="game.PlayerActionInvoker" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="game.GameAction" target="game.GamePlayer" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="rummy.RummyMoveDraw" target="rummy.RummyMoveAction"/>
+    <HasRelation name="hand" source="rummy.RummyHumanPlayer" target="rummy.Card" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="game.Game" target="game.PlayerActionInvoker" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="game.ProxyPlayer" target="game.GamePlayer"/>
+    <IsRelation name="is" source="game.GameQuitAction" target="game.GameAction"/>
+    <UseRelation source="game.GameIsOverInvoker" target="game.GamePlayer" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="rummy.RummyMoveAction" target="game.GameMoveAction"/>
+    <IsRelation name="is" source="rummy.RummyPlayer" target="game.GamePlayer"/>
+    <UseRelation source="game.DummyTimerPlayer" target="game.Game" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="moveLog" source="rummy.RummyState" target="rummy.Move" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="game.DummyTimerPlayer" target="game.GamePlayer"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="rummy.RummyDriver" target="game.GameDriver"/>
+    <UseRelation source="rummy.RummyState" target="rummy.Card" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="rummy.RummyGui" target="game.GameGui"/>
+    <HasRelation name="discard" source="rummy.RummyState" target="rummy.Card" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="hand" source="rummy.RummyComputerPlayer" target="rummy.Card" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="hands" source="rummy.RummyState" target="rummy.Card" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="rummy.RummyGui" target="game.GameGui" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="game.ProxyPlayer" target="game.GameState" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="rummy.RummyHumanPlayer" target="game.Game" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="rummy.RummyMoveMeld" target="rummy.RummyMoveAction"/>
+    <UseRelation source="game.GameGui" target="game.Game" sourceCardinality="1..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
